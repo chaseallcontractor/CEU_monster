@@ -1,27 +1,37 @@
 "use client";
 import { useEffect, useState } from "react";
-import { db } from "../lib/firebaseConfig";
-import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/lib/firebaseConfig";      // note: "@/lib/..." import
+import { doc, getDoc } from "firebase/firestore";
 
-export default function Home() {
-  const [status, setStatus] = useState("Checking Firebase...");
+export default function HomePage() {
+  const [status, setStatus] = useState<"loading" | "ok" | "error">("loading");
 
   useEffect(() => {
-    const testFirebase = async () => {
+    (async () => {
       try {
-        const snapshot = await getDocs(collection(db, "test"));
-        setStatus("✅ Firebase connection successful!");
-      } catch (error) {
-        console.error(error);
-        setStatus("❌ Firebase connection failed. Check config.");
+        const snap = await getDoc(doc(db, "public", "health"));
+        setStatus(snap.exists() ? "ok" : "error");
+      } catch {
+        setStatus("error");
       }
-    };
-    testFirebase();
+    })();
   }, []);
 
   return (
-    <main className="flex items-center justify-center min-h-screen text-xl">
-      {status}
+    <main className="min-h-screen flex items-center justify-center p-6">
+      {status === "loading" && <p>Checking connection…</p>}
+      {status === "ok" && (
+        <div className="text-center">
+          <p className="text-green-600">✅ Connected to Firebase</p>
+          <p className="text-sm text-gray-600 mt-2">
+            Continue to <a className="underline" href="/login">login</a> or{" "}
+            <a className="underline" href="/signup">signup</a>.
+          </p>
+        </div>
+      )}
+      {status === "error" && (
+        <p className="text-red-600">❌ Firebase connection failed. Check config.</p>
+      )}
     </main>
   );
 }

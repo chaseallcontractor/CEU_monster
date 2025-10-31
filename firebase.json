@@ -1,34 +1,23 @@
 {
+  "functions": {
+    "source": "functions",
+    "runtime": "nodejs20"
+  },
+  "hosting": {
+    "source": ".",
+    "frameworksBackend": {},
+    "headers": [
+      {
+        "source": "/assets/**",
+        "headers": [
+          { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        ]
+      }
+    ]
+  },
   "firestore": {
-    "database": "(default)",
-    "location": "nam5",
     "rules": "firestore.rules",
     "indexes": "firestore.indexes.json"
-  },
-  "functions": [
-    {
-      "source": "functions",
-      "codebase": "default",
-      "ignore": [
-        "node_modules",
-        ".git",
-        "firebase-debug.log",
-        "firebase-debug.*.log",
-        "*.local"
-      ],
-      "predeploy": [
-        "npm --prefix \"$RESOURCE_DIR\" run lint",
-        "npm --prefix \"$RESOURCE_DIR\" run build"
-      ]
-    }
-  ],
-  "hosting": {
-    "public": "public",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ]
   },
   "storage": {
     "rules": "storage.rules"

@@ -1,18 +1,84 @@
-rules_version='2'
-
+rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+
+    // Public read-only health doc for the homepage connection check
+    match /public/{docId} {
+      allow read: if docId == "health";
+      allow write: if false;
+    }
+
+    // Users can read/write ONLY their own user doc
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Classes and their subcollections
+    match /classes/{classId} {
+      // Anyone can read classes
+      allow read: if true;
+
+      // Create: only owner can create and must include their own UID
+      allow create: if request.auth != null &&
+                    request.resource.data.ownerUid == request.auth.uid;
+
+      // Update/Delete: only the class owner
+      allow update, delete: if request.auth != null &&
+                            resource.data.ownerUid == request.auth.uid;
+
+      // ✅ Certificates subcollection (creator-managed)
+      match /certificates/{certId} {
+        // Allow public read so QR/Redeem pages can display info
+        allow read: if true;
+
+        // Only the class owner can create/update/delete certificate templates
+        allow create: if request.auth != null &&
+                      request.resource.data.ownerUid == request.auth.uid &&
+                      request.resource.data.keys().hasOnly([
+                        'title','ceuHours','issuerOrgName','instructorName','logoUrl','ownerUid',
+                        'qrMode','createdAt','updatedAt','maxIssues','issuedCount'
+                      ]);
+        allow update, delete: if request.auth != null &&
+                              resource.data.ownerUid == request.auth.uid;
+      }
+
+      // ✅ Redemptions subcollection (attendee submits email)
+      match /redemptions/{redeemId} {
+        // --- Creation: learners submit their redemption ---
+        allow create: if
+          request.resource.data.keys().hasOnly([
+            'certId','learnerEmail','learnerName','licenseNumber','status','createdAt'
+          ]) &&
+          request.resource.data.learnerEmail is string &&
+          // optional name can be null or string
+          (request.resource.data.learnerName == null ||
+           request.resource.data.learnerName is string) &&
+          // optional license number can be null or string
+          (request.resource.data.licenseNumber == null ||
+           request.resource.data.licenseNumber is string) &&
+          // status is either pending (live) or test (sandbox)
+          request.resource.data.status in ['pending','test'] &&
+          // must use server time
+          request.resource.data.createdAt == request.time;
+
+        // --- Reading: allow learners or owner to read processed certificates ---
+        allow read: if
+          // Class owner can always read
+          (request.auth != null &&
+            get(/databases/$(database)/documents/classes/$(classId)).data.ownerUid
+              == request.auth.uid)
+          ||
+          // Or anyone can read if it's processed (public access for finished cert)
+          (resource.data.status == 'processed');
+
+        // --- Updates: system-managed only ---
+        allow update, delete: if false;
+      }
+    }
+
+    // Deny everything else by default
     match /{document=**} {
-      // This rule allows anyone with your database reference to view, edit,
-      // and delete all data in your database. It is useful for getting
-      // started, but it is configured to expire after 30 days because it
-      // leaves your app open to attackers. At that time, all client
-      // requests to your database will be denied.
-      //
-      // Make sure to write security rules for your app before that time, or
-      // else all client requests to your database will be denied until you
-      // update your rules.
-      allow read, write: if request.time < timestamp.date(2025, 11, 6);
+      allow read, write: if false;
     }
   }
 }

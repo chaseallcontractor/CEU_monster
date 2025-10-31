@@ -25,6 +25,7 @@ export default function RedeemPage() {
 
   const [tpl, setTpl] = useState<CertTemplate | null>(null);
   const [email, setEmail] = useState("");
+  const [licenseNumber, setLicenseNumber] = useState(""); // NEW
   const [name, setName] = useState("");
   const [busy, setBusy] = useState(false);
   const [ok, setOk] = useState(false);
@@ -62,6 +63,7 @@ export default function RedeemPage() {
     setOk(false);
 
     const emailTrim = email.trim().toLowerCase();
+    const licTrim = licenseNumber.trim();
 
     // simple email check
     if (!emailTrim || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailTrim)) {
@@ -75,11 +77,13 @@ export default function RedeemPage() {
         certId: "default",
         learnerEmail: emailTrim,
         learnerName: name.trim() || null,
+        licenseNumber: licTrim || null, // NEW (optional)
         status: tpl?.qrMode === "test" ? "test" : "pending",
         createdAt: serverTimestamp(), // enforced by rules
       });
       setOk(true);
       setEmail("");
+      setLicenseNumber(""); // NEW
       setName("");
     } catch (e: any) {
       console.error(e);
@@ -123,6 +127,17 @@ export default function RedeemPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             autoFocus
+          />
+        </div>
+
+        {/* NEW: License Number */}
+        <div>
+          <label className="block text-sm font-medium">License Number (optional)</label>
+          <input
+            className="mt-1 w-full rounded-xl border px-3 py-2"
+            placeholder="e.g., HVAC-123456"
+            value={licenseNumber}
+            onChange={(e) => setLicenseNumber(e.target.value)}
           />
         </div>
 

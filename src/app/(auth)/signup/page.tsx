@@ -4,6 +4,15 @@ import { auth } from "@/lib/firebaseConfig";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useRouter } from "next/navigation";
 
+import { db } from "@/lib/firebaseConfig";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+
+type Roles = {
+  participant: boolean;
+  creator: boolean;
+  admin: boolean;
+};
+
 export default function SignUpPage() {
   const router = useRouter();
   const [form, setForm] = useState({ name: "", email: "", password: "" });
@@ -15,17 +24,36 @@ export default function SignUpPage() {
     setErr(null);
     setLoading(true);
     try {
+      // Create the auth user
       const cred = await createUserWithEmailAndPassword(
         auth,
         form.email,
         form.password
       );
-      if (form.name) {
-        await updateProfile(cred.user, { displayName: form.name });
+
+      // Optional: set display name
+      if (form.name.trim()) {
+        await updateProfile(cred.user, { displayName: form.name.trim() });
       }
+
+      // NEW: structured roles object
+      const roles: Roles = { participant: true, creator: false, admin: false };
+
+      // Create the Firestore user profile document
+      await setDoc(doc(db, "users", cred.user.uid), {
+        uid: cred.user.uid,
+        email: cred.user.email,
+        displayName: cred.user.displayName || form.name.trim() || "",
+        role: "participant", // keep temporarily for backward-compat
+        roles,               // <-- new roles object
+        createdAt: serverTimestamp(),
+      });
+
+      // Go to dashboard
       router.push("/dashboard");
-    } catch (e: any) {
-      setErr(e.message || "Sign up failed");
+    } catch (e: unknown) {
+      const message = e instanceof Error ? e.message : "Sign up failed";
+      setErr(message);
     } finally {
       setLoading(false);
     }

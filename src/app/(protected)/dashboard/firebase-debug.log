@@ -1,0 +1,90 @@
+[debug] [2025-10-20T19:09:29.955Z] ----------------------------------------------------------------------
+[debug] [2025-10-20T19:09:29.960Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\clcar\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting
+[debug] [2025-10-20T19:09:29.961Z] CLI Version:   14.20.0
+[debug] [2025-10-20T19:09:29.961Z] Platform:      win32
+[debug] [2025-10-20T19:09:29.961Z] Node Version:  v22.18.0
+[debug] [2025-10-20T19:09:29.962Z] Time:          Mon Oct 20 2025 15:09:29 GMT-0400 (Eastern Daylight Time)
+[debug] [2025-10-20T19:09:29.962Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-10-20T19:09:30.314Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-20T19:09:30.315Z] > authorizing via signed-in user (chase@allcontractormarketing.com)
+[debug] [2025-10-20T19:09:30.315Z] [iam] checking project ceu-monster for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2025-10-20T19:09:30.318Z] Checked if tokens are valid: false, expires at: 1760980287913
+[debug] [2025-10-20T19:09:30.318Z] Checked if tokens are valid: false, expires at: 1760980287913
+[debug] [2025-10-20T19:09:30.318Z] > refreshing access token with scopes: []
+[debug] [2025-10-20T19:09:30.322Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-10-20T19:09:30.322Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-20T19:09:30.511Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-10-20T19:09:30.511Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-20T19:09:30.526Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/ceu-monster:testIamPermissions [none]
+[debug] [2025-10-20T19:09:30.527Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/ceu-monster:testIamPermissions x-goog-quota-user=projects/ceu-monster
+[debug] [2025-10-20T19:09:30.527Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/ceu-monster:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2025-10-20T19:09:30.721Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/ceu-monster:testIamPermissions 200
+[debug] [2025-10-20T19:09:30.722Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/ceu-monster:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2025-10-20T19:09:30.722Z] Checked if tokens are valid: true, expires at: 1760990969511
+[debug] [2025-10-20T19:09:30.723Z] Checked if tokens are valid: true, expires at: 1760990969511
+[debug] [2025-10-20T19:09:30.723Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/ceu-monster [none]
+[debug] [2025-10-20T19:09:30.962Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/ceu-monster 200
+[debug] [2025-10-20T19:09:30.962Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/ceu-monster {"projectId":"ceu-monster","projectNumber":"935091978089","displayName":"CEU Monster","name":"projects/ceu-monster","resources":{"hostingSite":"ceu-monster"},"state":"ACTIVE","etag":"1_98c00ac9-0a6e-4beb-871c-436d2bc8740d"}
+[debug] [2025-10-20T19:09:34.385Z] Checked if tokens are valid: true, expires at: 1760990969511
+[debug] [2025-10-20T19:09:34.386Z] Checked if tokens are valid: true, expires at: 1760990969511
+[debug] [2025-10-20T19:09:34.386Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/ceu-monster/sites pageToken=&pageSize=10
+[debug] [2025-10-20T19:09:34.813Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/ceu-monster/sites 200
+[debug] [2025-10-20T19:09:34.814Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/ceu-monster/sites {"sites":[{"name":"projects/ceu-monster/sites/ceu-monster","defaultUrl":"https://ceu-monster.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2025-10-20T19:09:34.815Z] Checked if tokens are valid: true, expires at: 1760990969511
+[debug] [2025-10-20T19:09:34.815Z] Checked if tokens are valid: true, expires at: 1760990969511
+[debug] [2025-10-20T19:09:34.815Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/ceu-monster/sites 
+[debug] [2025-10-20T19:09:34.990Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/ceu-monster/sites 200
+[debug] [2025-10-20T19:09:34.991Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/ceu-monster/sites {"sites":[{"name":"projects/ceu-monster/sites/ceu-monster","defaultUrl":"https://ceu-monster.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2025-10-20T19:09:34.991Z] Checked if tokens are valid: true, expires at: 1760990969511
+[debug] [2025-10-20T19:09:34.992Z] Checked if tokens are valid: true, expires at: 1760990969511
+[debug] [2025-10-20T19:09:34.992Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/ceu-monster/webApps/-/config [none]
+[debug] [2025-10-20T19:09:35.461Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/ceu-monster/webApps/-/config 200
+[debug] [2025-10-20T19:09:35.461Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/ceu-monster/webApps/-/config {"projectId":"ceu-monster","appId":"1:935091978089:web:91d980454a05ad828487f8","storageBucket":"ceu-monster.firebasestorage.app","apiKey":"AIzaSyAdCTpACPZPMYzUD_Lvzx7kdvyHX2ACijw","authDomain":"ceu-monster.firebaseapp.com","messagingSenderId":"935091978089","projectNumber":"935091978089","version":"2"}
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+   The integration is known to work with Next.js version 12 - 15.0. You may encounter errors.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[debug] [2025-10-20T19:09:43.702Z] Checked if tokens are valid: true, expires at: 1760990969511
+[debug] [2025-10-20T19:09:43.702Z] Checked if tokens are valid: true, expires at: 1760990969511
+[debug] [2025-10-20T19:09:43.703Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/ceu-monster/sites/ceu-monster [none]
+[debug] [2025-10-20T19:09:43.999Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/ceu-monster/sites/ceu-monster 200
+[debug] [2025-10-20T19:09:43.999Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/ceu-monster/sites/ceu-monster {"name":"projects/ceu-monster/sites/ceu-monster","defaultUrl":"https://ceu-monster.web.app","type":"DEFAULT_SITE"}
+[info]    ▲ Next.js 15.5.4
+
+[info] 
+
+[info]    Creating an optimized production build ...
+
+[info]  ✓ Compiled successfully in 9.6s
+
+[info]    Skipping linting
+
+[info]    Checking validity of types ...
+
+[info] Failed to compile.
+
+
+[info] ./src/app/(protected)/dashboard/classes/new/page.tsx:12:17
+Type error: Property 'profile' does not exist on type 'AuthCtx'.
+
+  10 | export default function NewClassPage() {
+  11 |   const router = useRouter();
+> 12 |   const { user, profile, loading } = useAuth();
+     |                 ^
+  13 |   const isCreator = !!profile?.roles?.creator;
+  14 |
+  15 |   const [title, setTitle] = useState("");
+
+[info] Next.js build worker exited with code: 1 and signal: null
+
+[debug] [2025-10-20T19:10:07.735Z] Error: ENOENT: no such file or directory, open 'C:\Users\clcar\ceu-monster\.next\export-marker.json'
+[error] 
+[error] Error: An unexpected error has occurred.

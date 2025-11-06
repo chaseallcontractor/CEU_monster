@@ -1,5 +1,5 @@
 // app/layout.tsx
-import "../src/app/globals.css";
+import "./globals.css";
 import type { Metadata } from "next";
 import AuthProvider from "../src/providers/AuthProvider";
 
